@@ -2,6 +2,8 @@ package Ficheros;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,25 +33,110 @@ public class Metodos {
 		List<Libro> libros = new ArrayList<>();
 
 		//CREACION DE LIBROS
-		Libro ironman = new Libro("Iron Man", 1000, "kikewest", 5.1, Categoria.Ficción);
-		Libro deadpool = new Libro("Deadpool", 1001, "Tim Miller", 5.1, Categoria.No_ficción);
-		Libro toystory = new Libro("Toy Story", 1002, "John Lasseter", 5.1, Categoria.Didácticos);
-		Libro cars = new Libro("Cars", 1003, "John Lasseter", 8.1, Categoria.Ciencia);
-		Libro elAscensoDeSkyWalker = new Libro("El ascenso de Sky-Walker", 1004, "J. J. Abrams", 5.1, Categoria.Arte);
-		Libro hanSolo = new Libro("Han Solo", 1005, "Ron Howard", 8.1, Categoria.Deportes);
-		Libro reyLeon  = new Libro("El Rey Leon", 1006, "Rob Minkoff", 5.1, Categoria.Infantiles);
-		Libro frozen  = new Libro("Frozen", 1007, "Chris Buck", 8.1, Categoria.Deportes);
+		// Ficción
+        Libro cienAnosSoledad = new Libro("Cien años de soledad", 9780307350433, "Gabriel García Márquez", "Cien años de soledad", parseFecha("1967-05-30"), Categoria.Ficción, Genero.drama, Genero.magia);
+        Libro donQuijote = new Libro("Don Quijote de la Mancha", 9788420412146, "Miguel de Cervantes", "Alonso Fernández de Avellaneda", parseFecha("1605-01-16"), Categoria.Ficción, Genero.aventura, Genero.comedia);
+        Libro rayuela = new Libro("Rayuela", 9788437604947, "Julio Cortázar", "Siglo XXI Editores", parseFecha("1963-06-28"), Categoria.Ficción, Genero.drama, Genero.suspense);
+        Libro crimenCastigo = new Libro("Crimen y castigo", 9788437602172, "Fiodor Dostoievski", "Siglo XXI Editores", parseFecha("1866-12-22"), Categoria.Ficción, Genero.suspense, Genero.drama);
+
+        // No ficción
+        Libro unaBreveHistoriaDelTiempo = new Libro("Una breve historia del tiempo", 9780553380163, "Stephen Hawking", "Bantam Books", parseFecha("1988-04-01"), Categoria.No_ficción, Genero.documental, Genero.ciencia_ficción);
+        Libro sapiens = new Libro("Sapiens: De animales a dioses", 9788499924216, "Yuval Noah Harari", "Debate", parseFecha("2011-06-14"), Categoria.No_ficción, Genero.documental, Genero.historia);
+        Libro elPrincipe = new Libro("El príncipe", 9788484284232, "Niccolò Machiavelli", "Clásicos Inolvidables", parseFecha("1532"), Categoria.No_ficción, Genero.política, Genero.filosofía);
+        Libro intoTheWild = new Libro("Hacia rutas salvajes", 9788433901900, "Jon Krakauer", "Anagrama", parseFecha("1996-01-01"), Categoria.No_ficción, Genero.aventura, Genero.biografía);
+
+        // Didácticos
+        Libro elArteDeAprender = new Libro("El arte de aprender", 9788495787555, "Josh Waitzkin", "Empresa Activa", parseFecha("2007-05-25"), Categoria.Didácticos, Genero.autoayuda, Genero.educación);
+        Libro elPoderDelHabito = new Libro("El poder del hábito", 9788499982582, "Charles Duhigg", "DeBolsillo", parseFecha("2012-03-06"), Categoria.Didácticos, Genero.psicología, Genero.autoayuda);
+        Libro pensarRapidoPensarDespacio = new Libro("Pensar rápido, pensar despacio", 9788498921808, "Daniel Kahneman", "DeBolsillo", parseFecha("2011-11-17"), Categoria.Didácticos, Genero.psicología, Genero.economía);
+        Libro elEfectoMariposa = new Libro("El efecto mariposa", 9788498011901, "James Gleick", "Crítica", parseFecha("1987-01-01"), Categoria.Didácticos, Genero.ciencia, Genero.matemáticas);
+
+        // Arte
+        Libro elCodigoDaVinci = new Libro("El código Da Vinci", 9788466637951, "Dan Brown", "Ediciones B", parseFecha("2003-03-17"), Categoria.Arte, Genero.suspense, Genero.misterio);
+        Libro starryNight = new Libro("La noche estrellada", 9788432092894, "Vincent van Gogh", "Espasa", parseFecha("1889"), Categoria.Arte, Genero.bellas_artes, Genero.pintura);
+        Libro elGuernica = new Libro("Guernica", 9788484801600, "Pablo Picasso", "Alianza Editorial", parseFecha("1937"), Categoria.Arte, Genero.bellas_artes, Genero.pintura);
+        Libro elNombreDeLaRosa = new Libro("El nombre de la rosa", 9788426411655, "Umberto Eco", "Lumen", parseFecha("1980-10-16"), Categoria.Arte, Genero.misterio, Genero.historia);
+
+        // Infantiles
+        Libro dondeVivenLosMonstruos = new Libro("Donde viven los monstruos", 9788493464417, "Maurice Sendak", "Kalandraka", parseFecha("1963-09-17"), Categoria.Infantiles, Genero.infantil, Genero.fantasía);
+        Libro elGatoEnElSombrero = new Libro("El gato en el sombrero", 9788448816555, "Dr. Seuss", "Beascoa", parseFecha("1957-03-12"), Categoria.Infantiles, Genero.infantil, Genero.humor);
+        Libro elPrincipito = new Libro("El principito", 9788426134623, "Antoine de Saint-Exupéry", "Juventud", parseFecha("1943-04-06"), Categoria.Infantiles, Genero.infantil, Genero.filosofía);
+        Libro winnieThePooh = new Libro("Winnie the Pooh", 9780142419407, "A.A. Milne", "Puffin Books", parseFecha("1926-10-14"), Categoria.Infantiles, Genero.infantil, Genero.humor);
+
+        // Autoayuda
+        Libro pienseYHagaseRico = new Libro("Piense y hágase rico", 9781619491875, "Napoleon Hill", "Seedbox Press", parseFecha("1937-03-03"), Categoria.Autoayuda, Genero.autoayuda, Genero.exito_personal);
+        Libro elSecreto = new Libro("El secreto", 9781582701707, "Rhonda Byrne", "Atria Books", parseFecha("2006-11-26"), Categoria.Autoayuda, Genero.autoayuda, Genero.ley_de_atracción);
+        Libro sieteHabitosDeLaGenteAltamenteEfectiva = new Libro("Los 7 hábitos de la gente altamente efectiva", 9788449318016, "Stephen R. Covey", "Paidós", parseFecha("1989-08-15"), Categoria.Autoayuda, Genero.autoayuda, Genero.liderazgo);
+        Libro elPoderDelAhora = new Libro("El poder del ahora", 9788478085380, "Eckhart Tolle", "Grijalbo", parseFecha("1997-08-19"), Categoria.Autoayuda, Genero.autoayuda, Genero.espiritualidad);
+
+        // Viajes
+        Libro enElCamino = new Libro("En el camino", 9788433914545, "Jack Kerouac", "Anagrama", parseFecha("1957-09-05"), Categoria.Viajes, Genero.aventura, Genero.biografía);
+        Libro aLaCazaDelCarneroSalvaje = new Libro("A la caza del carnero salvaje", 9788483835107, "Haruki Murakami", "Tusquets Editores", parseFecha("1982-04-30"), Categoria.Viajes, Genero.aventura, Genero.ficción);
+        Libro intoThinAir = new Libro("De vuelta a lo alto", 9788484504662, "Jon Krakauer", "Paidós", parseFecha("1997-05-01"), Categoria.Viajes, Genero.aventura, Genero.biografía);
+        Libro laOdisea = new Libro("La Odisea", 9788477028753, "Homero", "Alba Editorial", parseFecha("Siglo VIII a.C."), Categoria.Viajes, Genero.aventura, Genero.epopeya);
+
+        // Ciencia
+        Libro cosmos = new Libro("Cosmos", 9780345539434, "Carl Sagan", "Random House", parseFecha("1980-09-28"), Categoria.Ciencia, Genero.documental, Genero.astronomía);
+        Libro elGenEgoista = new Libro("El gen egoísta", 9780199291151, "Richard Dawkins", "Oxford University Press", parseFecha("1976-01-01"), Categoria.Ciencia, Genero.divulgación_científica, Genero.biología);
+        Libro elCuerpoHumano = new Libro("El libro del cuerpo humano", 9781405332941, "DK", "DK", parseFecha("2007-02-05"), Categoria.Ciencia, Genero.divulgación_científica, Genero.anatomía);
+        Libro unaBreveHistoriaDelTiempo2 = new Libro("Una breve historia del tiempo", 9780553380163, "Stephen Hawking", "Bantam Books", parseFecha("1988-04-01"), Categoria.Ciencia, Genero.divulgación_científica, Genero.astronomía);
+
+        // Deportes
+        Libro moneyball = new Libro("Moneyball", 9780393057652, "Michael Lewis", "W. W. Norton & Company", parseFecha("2003-05-17"), Categoria.Deportes, Genero.deportes, Genero.biografía);
+        Libro bornToRun = new Libro("Born to Run", 9780307279187, "Christopher McDougall", "Knopf", parseFecha("2009-05-05"), Categoria.Deportes, Genero.deportes, Genero.aventura);
+        Libro open = new Libro("Open", 9780379182023, "Andre Agassi", "Knopf", parseFecha("2009-11-09"), Categoria.Deportes, Genero.deportes, Genero.biografía);
+        Libro theBoysInTheBoat = new Libro("The Boys in the Boat", 9780670025817, "Daniel James Brown", "Viking Press", parseFecha("2013-06-04"), Categoria.Deportes, Genero.deportes, Genero.historia);
+        Libro theMambaMentality = new Libro("The Mamba Mentality", 9780374201234, "Kobe Bryant", "MCD", parseFecha("2018-10-23"), Categoria.Deportes, Genero.deportes, Genero.biografía);
 
 
-		//Añadimos las peliculas
-		libros.add(ironman);
-		libros.add(deadpool);
-		libros.add(toystory);
-		libros.add(cars);
-		libros.add(elAscensoDeSkyWalker);
-		libros.add(hanSolo);
-		libros.add(reyLeon);
-		libros.add(frozen);
+		//Añadimos los libros
+        libros.add(cienAnosSoledad);
+        libros.add(donQuijote);
+        libros.add(rayuela);
+        libros.add(crimenCastigo);
+
+        libros.add(unaBreveHistoriaDelTiempo);
+        libros.add(sapiens);
+        libros.add(elPrincipe);
+        libros.add(intoTheWild);
+
+        libros.add(elArteDeAprender);
+        libros.add(elPoderDelHabito);
+        libros.add(pensarRapidoPensarDespacio);
+        libros.add(elEfectoMariposa);
+
+        libros.add(elCodigoDaVinci);
+        libros.add(starryNight);
+        libros.add(elGuernica);
+        libros.add(elNombreDeLaRosa);
+
+        libros.add(dondeVivenLosMonstruos);
+        libros.add(elGatoEnElSombrero);
+        libros.add(elPrincipito);
+        libros.add(winnieThePooh);
+
+        libros.add(pienseYHagaseRico);
+        libros.add(elSecreto);
+        libros.add(sieteHabitosDeLaGenteAltamenteEfectiva);
+        libros.add(elPoderDelAhora);
+
+        libros.add(enElCamino);
+        libros.add(aLaCazaDelCarneroSalvaje);
+        libros.add(intoThinAir);
+        libros.add(laOdisea);
+
+        libros.add(cosmos);
+        libros.add(elGenEgoista);
+        libros.add(elCuerpoHumano);
+        libros.add(unaBreveHistoriaDelTiempo2);
+
+        libros.add(moneyball);
+        libros.add(bornToRun);
+        libros.add(open);
+        libros.add(theBoysInTheBoat);
+        libros.add(theMambaMentality);
+
+		
 
 		// Crear un objeto de la clase Disney y configurar las categorías en ese objeto.
 		Biblioteca biblioteca = new Biblioteca(libros);
@@ -70,6 +157,11 @@ public class Metodos {
 			System.out.println("Ocurrió el siguiente error: " + e.getMessage());
 		}
 		return biblioteca;
+	}
+	private static java.sql.Date parseFecha(String fecha) throws ParseException {
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	    java.util.Date utilDate = dateFormat.parse(fecha);
+	    return new java.sql.Date(utilDate.getTime());
 	}
 
 	public static String leerXML(String rutaArchivoXML) {
