@@ -1,11 +1,12 @@
 package Ficheros;
 
-import java.util.Date;
+import java.math.BigInteger;
+import java.time.LocalDate;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlType(propOrder = { "titulo", "isbn", "autor", "fecha", "editorial", "categoria", "genero1", "genero2" })
+@XmlType(propOrder = { "titulo", "isbn", "autor", "fecha", "editorial", "categoria", "genero"})
 public class Libro {
 
     // Atributos
@@ -13,27 +14,25 @@ public class Libro {
     private long Isbn;
     private String Autor;
     private String Editorial;
-    private Date Fecha; // Cambiado a tipo Date
+    private String Fecha; // Cambiado a tipo Date
     private Categoria Categoria;
-    private Genero genero1;
-    private Genero genero2;
+    private Genero genero;
 
    public Libro() {
 
    }
 
 
-    public Libro(String titulo, long isbn, String autor, String editorial, Date fecha, Ficheros.Categoria categoria,
-			Genero genero1, Genero genero2) {
+    public Libro(String titulo, long isbn, String autor, String editorial, String fecha, Ficheros.Categoria categoria,
+			Genero genero) {
 		super();
-		Titulo = titulo;
-		Isbn = isbn;
-		Autor = autor;
-		Editorial = editorial;
-		Fecha = fecha;
-		Categoria = categoria;
-		this.genero1 = genero1;
-		this.genero2 = genero2;
+		this.Titulo = titulo;
+		this.Isbn = isbn;
+		this.Autor = autor;
+		this.Editorial = editorial;
+		this.Fecha = fecha;
+		this.Categoria = categoria;
+		this.genero = genero;
 	}
 
 	// Métodos (Getter y Setter)
@@ -74,11 +73,11 @@ public class Libro {
     }
 
     @XmlElement
-    public Date getFecha() {
+    public String getFecha() {
         return Fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         Fecha = fecha;
     }
 
@@ -92,21 +91,12 @@ public class Libro {
     }
 
     @XmlElement
-    public Genero getGenero1() {
-        return genero1;
+    public Genero getGenero() {
+        return genero;
     }
 
-    public void setGenero1(Genero genero1) {
-        this.genero1 = genero1;
-    }
-
-    @XmlElement
-    public Genero getGenero2() {
-        return genero2;
-    }
-
-    public void setGenero2(Genero genero2) {
-        this.genero2 = genero2;
+    public void setGenero(Genero genero) {
+        this.genero = genero;
     }
 
     // Método toString

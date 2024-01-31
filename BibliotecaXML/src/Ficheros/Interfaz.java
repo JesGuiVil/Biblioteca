@@ -9,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Point;
@@ -31,8 +32,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
@@ -44,7 +48,6 @@ public class Interfaz {
 	static Biblioteca biblioteca = new Biblioteca();
 	private static JFrame frame;
 	private static JPanel panelPrincipal;
-	private static GridBagConstraints constraints;
 	private static Clip clip;
 	private static JPanel panelMenu;
 	private static JPanel panelLibros;
@@ -59,7 +62,9 @@ public class Interfaz {
 	private static Font font;
 	private static Font fontpequenia;
 	private static JButton pausarMusica=new JButton("pausar música");
-	private static String[] opcionesFiccion;
+	private static JButton consultarXPathButton = new JButton("Consultar XPath");
+	private static Metodos metodos = new Metodos();
+    
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
@@ -129,6 +134,14 @@ public class Interfaz {
 		        }
 		    }
 		});
+		
+		consultarXPathButton.addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            metodos.realizarConsultaXPath(frame);
+	        }
+	    });
+		
 		try {
 			imagenFondo = ImageIO.read(new File("imagenes/biblioteca.jpg"));
 			panelPrincipal = new JPanel()
@@ -150,6 +163,7 @@ public class Interfaz {
 		panelActual=panelInicio;
 		panelPrincipal.add(panelActual);
 		panelPrincipal.revalidate();
+		
 		try {
 			BufferedImage cursorImage = ImageIO.read(new File("imagenes/boli.png"));
 			Cursor customCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImage, new Point(0, 0), "CustomCursor");
@@ -158,13 +172,16 @@ public class Interfaz {
 			e.printStackTrace();
 		}
 		frame.setLayout(new BorderLayout());
-		frame.add(pausarMusica,BorderLayout.SOUTH);
+		JPanel botonesPanel = new JPanel(new GridLayout(1, 2));
+	    botonesPanel.add(consultarXPathButton);
+	    botonesPanel.add(pausarMusica);
+	    frame.add(botonesPanel, BorderLayout.SOUTH);
 		frame.add(panelPrincipal);
 	}
 	public static void construirPanelMenu() {
 		 GridBagConstraints constraints = new GridBagConstraints();
 		    JButton botonLibros = new JButton("Ver libros");
-		    JButton botonMostrarXML = new JButton("Ver en xml");
+		    JButton botonMostrarXML = new JButton("Ver XML");
 		    JButton botonGestionar = new JButton("Gestionar biblioteca");
 		    JButton btnVolver = new JButton("Salir");
 
@@ -207,7 +224,7 @@ public class Interfaz {
 		botonMostrarXML.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String mostrar = Metodos.leerXML("Biblioteca.xml");
+				String mostrar = metodos.leerXML("Biblioteca.xml");
 				textArea = new JTextArea(20, 40); // Crear un JTextArea con 20 filas y 40 columnas
 				textArea.setText(mostrar);
 				scrollPane = new JScrollPane(textArea);
@@ -230,16 +247,62 @@ public class Interfaz {
 	}
 
 	public static void construirPanelLibros() {
-	    GridBagConstraints constraints = new GridBagConstraints();
+        GridBagConstraints constraints = new GridBagConstraints();
 
-	    // Crear botones con imágenes y desplegables para cada categoría
-	    Categoria[] categorias = Categoria.values();
+        // Crear botones con imágenes y desplegables para cada categoría
+        Categoria[] categorias = Categoria.values();
         for (int i = 0; i < categorias.length; i++) {
-            JButton botonDesplegable = construirBotonDesplegable(categorias[i]);
+            JButton botonDesplegable = new JButton();
+
+            // Lógica para cargar la imagen según la categoría (puedes personalizar esta parte)
+            String rutaImagen = "imagenes/" + categorias[i].toString().toLowerCase() + ".png";
+            ImageIcon icono = new ImageIcon(rutaImagen);
+            Image image = icono.getImage();
+            Image newImage = image.getScaledInstance(dimensionFija.width, dimensionFija.height, Image.SCALE_SMOOTH);
+            icono = new ImageIcon(newImage);
+            botonDesplegable.setIcon(icono);
+
+            // Establecer las dimensiones del botón
+            botonDesplegable.setPreferredSize(new Dimension(dimensionFija.width, dimensionFija.height));
+
             constraints.gridx = i % 3;
             constraints.gridy = i / 3;
             constraints.insets = new Insets(20, 20, 20, 20);
             panelLibros.add(botonDesplegable, constraints);
+
+            // Crear desplegable (JPopupMenu) para la categoría actual
+            JPopupMenu popupMenu = new JPopupMenu();
+            int contador = 0;
+            for (Libro libro : biblioteca.getLibros()) {
+                if (libro.getCategoria().equals(categorias[i])) {
+                    JMenuItem menuItem = new JMenuItem(libro.getTitulo());
+                    popupMenu.add(menuItem);
+                    contador++;
+
+                    // Agregar ActionListener para manejar clics en los títulos del desplegable
+                    menuItem.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            String tituloSeleccionado = ((JMenuItem) e.getSource()).getText();
+                            String info = Metodos.obtenerInfoPorTitulo(biblioteca, tituloSeleccionado);
+                            // Aquí puedes decidir qué hacer con la información, por ejemplo, mostrarla en un cuadro de diálogo
+                            JOptionPane.showMessageDialog(null, info, "Información del Libro", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    });
+                }
+            }
+
+            // Establecer las dimensiones del desplegable (opcional)
+            popupMenu.setPreferredSize(new Dimension(dimensionFija.width, dimensionFija.height * contador));
+
+            // Agregar desplegable al botón
+            botonDesplegable.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Mostrar el desplegable bajo el botón
+                    popupMenu.show(botonDesplegable, 0, botonDesplegable.getHeight());
+                }
+            });
         }
 
 	    // Agregar el botón para volver al menú principal
@@ -258,59 +321,7 @@ public class Interfaz {
 	    panelLibros.setOpaque(false);
 	    panelLibros.add(btnVolverMenuPrincipal, constraints);
 	}
-
-	// Método para construir un botón con imagen y desplegable para una categoría
-	private static JButton construirBotonDesplegable(Categoria categoria) {
-	    GridBagConstraints constraints = new GridBagConstraints();
-	    JButton botonDesplegar = new JButton();
-	    // Lógica para cargar la imagen según la categoría (puedes personalizar esta parte)
-	    String rutaImagen = "imagenes/" + categoria.toString().toLowerCase() + ".png";
-	    ImageIcon icono = new ImageIcon(rutaImagen);
-	    Image image = icono.getImage();
-	    Image newImage = image.getScaledInstance(dimensionFija.width, dimensionFija.height, Image.SCALE_SMOOTH);
-	    icono = new ImageIcon(newImage);
-	    botonDesplegar.setIcon(icono);
-	    botonDesplegar.setPreferredSize(new Dimension(dimensionFija.width, dimensionFija.height));
-	    botonDesplegar.addActionListener(new ActionListener() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	            // Lógica para mostrar el desplegable según la categoría
-	            mostrarDesplegable(categoria);
-	        }
-	    });
-
-	    return botonDesplegar;
-	}
-
-	// Método para mostrar el desplegable con los títulos de libros de una categoría específica
-	private static void mostrarDesplegable(Categoria categoria) {
-	    JComboBox<String> desplegable = new JComboBox<>();
-	    int contador = 0;
-
-	    // Contar la cantidad de libros en la categoría
-	    for (Libro libro : biblioteca.getLibros()) {
-	        if (libro.getCategoria().equals(categoria)) {
-	            contador++;
-	        }
-	    }
-
-	    // Crear un array con los títulos de los libros en la categoría
-	    String[] opcionesCategoria = new String[contador];
-	    int index = 0;
-	    for (Libro libro : biblioteca.getLibros()) {
-	        if (libro.getCategoria().equals(categoria)) {
-	            opcionesCategoria[index++] = libro.getTitulo();
-	        }
-	    }
-
-	    // Configurar el desplegable con los títulos
-	    desplegable.setModel(new DefaultComboBoxModel<>(opcionesCategoria));
-
-
-	    // Mostrar el desplegable en un cuadro de diálogo
-	    JOptionPane.showMessageDialog(frame, desplegable, "Libros de " + categoria, JOptionPane.PLAIN_MESSAGE);
-	}
-
+	
 	public static void cargarImagenFondo(String nombreImagen) {
 		try {
 			imagenFondo = ImageIO.read(new File("imagenes/" + nombreImagen));
@@ -336,16 +347,16 @@ public class Interfaz {
 	public static void construirPanelGestion() {
 		frame.getContentPane().add(panelGestion, BorderLayout.CENTER);
 		GridBagConstraints constraints = new GridBagConstraints();
-		JButton btnModificarTitulo = new JButton("Modificar Título");
+		JButton btnModificarLibro = new JButton("Modificar Libro");
 		JButton btnAgregarLibro = new JButton("Agregar Libro");
-		JButton btnEliminarContenido = new JButton("Eliminar Contenido");
+		JButton btnEliminarContenido = new JButton("Eliminar Libro");
 		JButton btnVolverMenuPrincipal = new JButton("Volver al Menú");
-		btnModificarTitulo.setFont(fontpequenia);
+		btnModificarLibro.setFont(fontpequenia);
 		btnAgregarLibro.setFont(fontpequenia);
 		btnEliminarContenido.setFont(fontpequenia);
 		btnVolverMenuPrincipal.setFont(fontpequenia);
 
-		btnModificarTitulo.setPreferredSize(dimensionFija);
+		btnModificarLibro.setPreferredSize(dimensionFija);
 		btnAgregarLibro.setPreferredSize(dimensionFija);
 		btnEliminarContenido.setPreferredSize(dimensionFija);
 		constraints.gridx = 0;
@@ -354,7 +365,7 @@ public class Interfaz {
 		panelGestion.add(btnAgregarLibro, constraints);
 		constraints.gridx = 1;
 		constraints.gridy = 0;
-		panelGestion.add(btnModificarTitulo, constraints);
+		panelGestion.add(btnModificarLibro, constraints);
 		constraints.gridx = 2;
 		constraints.gridy = 0;
 		panelGestion.add(btnEliminarContenido, constraints);
@@ -363,22 +374,22 @@ public class Interfaz {
 		constraints.insets = new Insets(20, 20, 20, 20);
 		panelGestion.add(btnVolverMenuPrincipal, constraints);
 		panelGestion.setOpaque(false);
-		btnModificarTitulo.addActionListener(new ActionListener() {
+		btnModificarLibro.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Metodos.modificarTitulo(biblioteca);
+				metodos.modificarLibro(biblioteca);
 			}
 		});
 		btnAgregarLibro.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Metodos.agregarLibro(biblioteca);
+				metodos.agregarLibro(biblioteca);
 			}
 		});
 		btnEliminarContenido.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Metodos.eliminarPorCodigo(biblioteca);
+				metodos.eliminarPorCodigo(biblioteca);
 			}
 		});
 
@@ -423,32 +434,43 @@ public class Interfaz {
 		frame.repaint();// Actualizar la interfaz
 	}
 	public static void reproducirMusica() {
-		try {
-			String rutaMusica = "audio/kingdomhearts.wav";
-			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(rutaMusica));
-			if (clip != null) {
-				clip.stop(); // La musica actual se detiene si se está reproduciendo otra
-				clip.close(); // Cerramos el clip actual
-			}
-			clip = AudioSystem.getClip();
-			clip.open(audioInputStream);
-			clip.addLineListener(new LineListener() {
-			    @Override
-			    public void update(LineEvent event) {
-			        if (event.getType() == LineEvent.Type.STOP) {
-			            // Cuando la reproducción se detiene, reinicia la música
-			            clip.stop();
-			            clip.setFramePosition(0); // Regresa al inicio
-			            clip.start();
-			        }
-			    }
-			});
-			FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-			float attenuation = -10.0f;
-			gainControl.setValue(attenuation);
-			clip.start(); // Reproducimos la música
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	    try {
+	        String rutaMusica = "audio/kingdomhearts.wav";
+	        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(rutaMusica));
+
+	        if (clip != null) {
+	            clip.stop(); // Detiene la música actual si se está reproduciendo
+	            clip.close(); // Cierra el clip actual
+	        }
+
+	        clip = AudioSystem.getClip();
+	        clip.open(audioInputStream);
+
+	        // Configura un listener para detectar el final de la reproducción
+	        clip.addLineListener(new LineListener() {
+	            @Override
+	            public void update(LineEvent event) {
+	                if (event.getType() == LineEvent.Type.STOP) {
+	                    // Cuando la reproducción se detiene, reinicia la música
+	                    if (!pausarMusica.getText().equals("Reanudar música")) {
+	                        clip.setFramePosition(0); // Reinicia solo si no está en pausa
+	                        clip.start(); // Reinicia la reproducción
+	                    }
+	                }
+	            }
+	        });
+
+	        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+	        float attenuation = -10.0f;
+	        gainControl.setValue(attenuation);
+
+	        if (!pausarMusica.getText().equals("Reanudar música")) {
+	            // Si no está en pausa, inicia la reproducción
+	            clip.start();
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
 }

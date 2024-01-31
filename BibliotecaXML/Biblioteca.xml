@@ -1,1 +1,336 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?><biblioteca><libros><titulo>Iron Man</titulo><isbn>1000</isbn><autor>kikewest</autor><nota>5.1</nota><categoria>Ficción</categoria></libros><libros><titulo>Deadpool</titulo><isbn>1001</isbn><autor>Tim Miller</autor><nota>5.1</nota><categoria>No_ficción</categoria></libros><libros><titulo>Toy Story</titulo><isbn>1002</isbn><autor>John Lasseter</autor><nota>5.1</nota><categoria>Didácticos</categoria></libros><libros><titulo>Cars</titulo><isbn>1003</isbn><autor>John Lasseter</autor><nota>8.1</nota><categoria>Ciencia</categoria></libros><libros><titulo>El ascenso de Sky-Walker</titulo><isbn>1004</isbn><autor>J. J. Abrams</autor><nota>5.1</nota><categoria>Arte</categoria></libros><libros><titulo>Han Solo</titulo><isbn>1005</isbn><autor>Ron Howard</autor><nota>8.1</nota><categoria>Deportes</categoria></libros><libros><titulo>El Rey Leon</titulo><isbn>1006</isbn><autor>Rob Minkoff</autor><nota>5.1</nota><categoria>Infantiles</categoria></libros><libros><titulo>Frozen</titulo><isbn>1007</isbn><autor>Chris Buck</autor><nota>8.1</nota><categoria>Deportes</categoria></libros></biblioteca>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<biblioteca>
+	<libros>
+		<titulo>Cien años de soledad</titulo>
+		<isbn>958276674747</isbn>
+		<autor>Gabriel García Márquez</autor>
+		<fecha>30-05-1967</fecha>
+		<editorial>Sudamericana</editorial>
+		<categoria>Ficción</categoria>
+		<genero>drama</genero>
+	</libros>
+	<libros>
+		<titulo>Don Quijote de la Mancha</titulo>
+		<isbn>9788420412146</isbn>
+		<autor>Miguel de Cervantes</autor>
+		<fecha>16-01-1605</fecha>
+		<editorial>Publicación Original</editorial>
+		<categoria>Ficción</categoria>
+		<genero>comedia</genero>
+	</libros>
+	<libros>
+		<titulo>Rayuela</titulo>
+		<isbn>9788437604947</isbn>
+		<autor>Julio Cortázar</autor>
+		<fecha>28-06-1963</fecha>
+		<editorial>Siglo XXI Editores</editorial>
+		<categoria>Ficción</categoria>
+		<genero>suspense</genero>
+	</libros>
+	<libros>
+		<titulo>Crimen y castigo</titulo>
+		<isbn>9788437602172</isbn>
+		<autor>Fiodor Dostoievski</autor>
+		<fecha>22-12-1866</fecha>
+		<editorial>Siglo XXI Editores</editorial>
+		<categoria>Ficción</categoria>
+		<genero>drama</genero>
+	</libros>
+	<libros>
+		<titulo>Una breve historia del tiempo</titulo>
+		<isbn>9780553380163</isbn>
+		<autor>Stephen Hawking</autor>
+		<fecha>01-04-1988</fecha>
+		<editorial>Bantam Books</editorial>
+		<categoria>No_ficción</categoria>
+		<genero>documental</genero>
+	</libros>
+	<libros>
+		<titulo>Sapiens: De animales a dioses</titulo>
+		<isbn>9788499924216</isbn>
+		<autor>Yuval Noah Harari</autor>
+		<fecha>14-06-2011</fecha>
+		<editorial>Debate</editorial>
+		<categoria>No_ficción</categoria>
+		<genero>documental</genero>
+	</libros>
+	<libros>
+		<titulo>El príncipe</titulo>
+		<isbn>9788484284232</isbn>
+		<autor>Niccolò Machiavelli</autor>
+		<fecha>01-01-1532</fecha>
+		<editorial>Clásicos Inolvidables</editorial>
+		<categoria>No_ficción</categoria>
+		<genero>política</genero>
+	</libros>
+	<libros>
+		<titulo>Hacia rutas salvajes</titulo>
+		<isbn>9788433901900</isbn>
+		<autor>Jon Krakauer</autor>
+		<fecha>01-01-1996</fecha>
+		<editorial>Anagrama</editorial>
+		<categoria>No_ficción</categoria>
+		<genero>biografía</genero>
+	</libros>
+	<libros>
+		<titulo>El arte de aprender</titulo>
+		<isbn>9788495787555</isbn>
+		<autor>Josh Waitzkin</autor>
+		<fecha>25-05-2007</fecha>
+		<editorial>Empresa Activa</editorial>
+		<categoria>Didácticos</categoria>
+		<genero>educación</genero>
+	</libros>
+	<libros>
+		<titulo>El poder del hábito</titulo>
+		<isbn>9788499982582</isbn>
+		<autor>Charles Duhigg</autor>
+		<fecha>06-03-2012</fecha>
+		<editorial>DeBolsillo</editorial>
+		<categoria>Didácticos</categoria>
+		<genero>psicología</genero>
+	</libros>
+	<libros>
+		<titulo>Pensar rápido, pensar despacio</titulo>
+		<isbn>9788498921808</isbn>
+		<autor>Daniel Kahneman</autor>
+		<fecha>17-11-2011</fecha>
+		<editorial>DeBolsillo</editorial>
+		<categoria>Didácticos</categoria>
+		<genero>psicología</genero>
+	</libros>
+	<libros>
+		<titulo>El efecto mariposa</titulo>
+		<isbn>9788498011901</isbn>
+		<autor>James Gleick</autor>
+		<fecha>01-01-1987</fecha>
+		<editorial>Crítica</editorial>
+		<categoria>Didácticos</categoria>
+		<genero>matemáticas</genero>
+	</libros>
+	<libros>
+		<titulo>El código Da Vinci</titulo>
+		<isbn>9788466637951</isbn>
+		<autor>Dan Brown</autor>
+		<fecha>17-03-2003</fecha>
+		<editorial>Ediciones B</editorial>
+		<categoria>Arte</categoria>
+		<genero>misterio</genero>
+	</libros>
+	<libros>
+		<titulo>La noche estrellada</titulo>
+		<isbn>9788432092894</isbn>
+		<autor>Vincent van Gogh</autor>
+		<fecha>01-01-1889</fecha>
+		<editorial>Espasa</editorial>
+		<categoria>Arte</categoria>
+		<genero>pintura</genero>
+	</libros>
+	<libros>
+		<titulo>Guernica</titulo>
+		<isbn>9788484801600</isbn>
+		<autor>Pablo Picasso</autor>
+		<fecha>01-01-1937</fecha>
+		<editorial>Alianza Editorial</editorial>
+		<categoria>Arte</categoria>
+		<genero>pintura</genero>
+	</libros>
+	<libros>
+		<titulo>El nombre de la rosa</titulo>
+		<isbn>9788426411655</isbn>
+		<autor>Umberto Eco</autor>
+		<fecha>16-10-1980</fecha>
+		<editorial>Lumen</editorial>
+		<categoria>Arte</categoria>
+		<genero>misterio</genero>
+	</libros>
+	<libros>
+		<titulo>Donde viven los monstruos</titulo>
+		<isbn>9788493464417</isbn>
+		<autor>Maurice Sendak</autor>
+		<fecha>17-09-1963</fecha>
+		<editorial>Kalandraka</editorial>
+		<categoria>Infantiles</categoria>
+		<genero>fantasía</genero>
+	</libros>
+	<libros>
+		<titulo>El gato en el sombrero</titulo>
+		<isbn>9788448816555</isbn>
+		<autor>Dr. Seuss</autor>
+		<fecha>12-03-1957</fecha>
+		<editorial>Beascoa</editorial>
+		<categoria>Infantiles</categoria>
+		<genero>humor</genero>
+	</libros>
+	<libros>
+		<titulo>El principito</titulo>
+		<isbn>9788426134623</isbn>
+		<autor>Antoine de Saint-Exupéry</autor>
+		<fecha>06-04-1943</fecha>
+		<editorial>Juventud</editorial>
+		<categoria>Infantiles</categoria>
+		<genero>filosofía</genero>
+	</libros>
+	<libros>
+		<titulo>Winnie the Pooh</titulo>
+		<isbn>9780142419407</isbn>
+		<autor>A.A. Milne</autor>
+		<fecha>14-10-1926</fecha>
+		<editorial>Puffin Books</editorial>
+		<categoria>Infantiles</categoria>
+		<genero>humor</genero>
+	</libros>
+	<libros>
+		<titulo>Piense y hágase rico</titulo>
+		<isbn>9781619491875</isbn>
+		<autor>Napoleon Hill</autor>
+		<fecha>03-03-1937</fecha>
+		<editorial>Seedbox Press</editorial>
+		<categoria>Autoayuda</categoria>
+		<genero>éxito_personal</genero>
+	</libros>
+	<libros>
+		<titulo>El secreto</titulo>
+		<isbn>9781582701707</isbn>
+		<autor>Rhonda Byrne</autor>
+		<fecha>26-11-2006</fecha>
+		<editorial>Atria Books</editorial>
+		<categoria>Autoayuda</categoria>
+		<genero>ley_de_atracción</genero>
+	</libros>
+	<libros>
+		<titulo>Los 7 hábitos de la gente altamente efectiva</titulo>
+		<isbn>9788449318016</isbn>
+		<autor>Stephen R. Covey</autor>
+		<fecha>15-08-1989</fecha>
+		<editorial>Paidós</editorial>
+		<categoria>Autoayuda</categoria>
+		<genero>liderazgo</genero>
+	</libros>
+	<libros>
+		<titulo>El poder del ahora</titulo>
+		<isbn>9788478085380</isbn>
+		<autor>Eckhart Tolle</autor>
+		<fecha>19-08-1997</fecha>
+		<editorial>Grijalbo</editorial>
+		<categoria>Autoayuda</categoria>
+		<genero>espiritualidad</genero>
+	</libros>
+	<libros>
+		<titulo>En el camino</titulo>
+		<isbn>9788433914545</isbn>
+		<autor>Jack Kerouac</autor>
+		<fecha>05-09-1957</fecha>
+		<editorial>Anagrama</editorial>
+		<categoria>Viajes</categoria>
+		<genero>aventura</genero>
+	</libros>
+	<libros>
+		<titulo>A la caza del carnero salvaje</titulo>
+		<isbn>9788483835107</isbn>
+		<autor>Haruki Murakami</autor>
+		<fecha>30-04-1982</fecha>
+		<editorial>Tusquets Editores</editorial>
+		<categoria>Viajes</categoria>
+		<genero>aventura</genero>
+	</libros>
+	<libros>
+		<titulo>De vuelta a lo alto</titulo>
+		<isbn>9788484504662</isbn>
+		<autor>Jon Krakauer</autor>
+		<fecha>01-05-1997</fecha>
+		<editorial>Paidós</editorial>
+		<categoria>Viajes</categoria>
+		<genero>biografía</genero>
+	</libros>
+	<libros>
+		<titulo>La Odisea</titulo>
+		<isbn>9788477028753</isbn>
+		<autor>Homero</autor>
+		<fecha>01-01-800</fecha>
+		<editorial>Alba Editorial</editorial>
+		<categoria>Viajes</categoria>
+		<genero>aventura</genero>
+	</libros>
+	<libros>
+		<titulo>Cosmos</titulo>
+		<isbn>9780345539434</isbn>
+		<autor>Carl Sagan</autor>
+		<fecha>28-09-1980</fecha>
+		<editorial>Random House</editorial>
+		<categoria>Ciencia</categoria>
+		<genero>documental</genero>
+	</libros>
+	<libros>
+		<titulo>El gen egoísta</titulo>
+		<isbn>9780199291151</isbn>
+		<autor>Richard Dawkins</autor>
+		<fecha>01-01-1976</fecha>
+		<editorial>Oxford University Press</editorial>
+		<categoria>Ciencia</categoria>
+		<genero>biología</genero>
+	</libros>
+	<libros>
+		<titulo>El libro del cuerpo humano</titulo>
+		<isbn>9781405332941</isbn>
+		<autor>DK</autor>
+		<fecha>05-02-2007</fecha>
+		<editorial>DK</editorial>
+		<categoria>Ciencia</categoria>
+		<genero>anatomía</genero>
+	</libros>
+	<libros>
+		<titulo>Una breve historia del tiempo</titulo>
+		<isbn>9780553380163</isbn>
+		<autor>Stephen Hawking</autor>
+		<fecha>01-04-1988</fecha>
+		<editorial>Bantam Books</editorial>
+		<categoria>Ciencia</categoria>
+		<genero>astronomía</genero>
+	</libros>
+	<libros>
+		<titulo>Moneyball</titulo>
+		<isbn>9780393057652</isbn>
+		<autor>Michael Lewis</autor>
+		<fecha>17-05-2003</fecha>
+		<editorial>W. W. Norton &amp; Company</editorial>
+		<categoria>Deportes</categoria>
+		<genero>biografía</genero>
+	</libros>
+	<libros>
+		<titulo>Born to Run</titulo>
+		<isbn>9780307279187</isbn>
+		<autor>Christopher McDougall</autor>
+		<fecha>05-05-2009</fecha>
+		<editorial>Knopf</editorial>
+		<categoria>Deportes</categoria>
+		<genero>aventura</genero>
+	</libros>
+	<libros>
+		<titulo>Open</titulo>
+		<isbn>9780379182023</isbn>
+		<autor>Andre Agassi</autor>
+		<fecha>09-11-2009</fecha>
+		<editorial>Knopf</editorial>
+		<categoria>Deportes</categoria>
+		<genero>biografía</genero>
+	</libros>
+	<libros>
+		<titulo>The Boys in the Boat</titulo>
+		<isbn>9780670025817</isbn>
+		<autor>Daniel James Brown</autor>
+		<fecha>04-06-2013</fecha>
+		<editorial>Viking Press</editorial>
+		<categoria>Deportes</categoria>
+		<genero>historia</genero>
+	</libros>
+	<libros>
+		<titulo>The Mamba Mentality</titulo>
+		<isbn>9780374201234</isbn>
+		<autor>Kobe Bryant</autor>
+		<fecha>23-10-2018</fecha>
+		<editorial>MCD</editorial>
+		<categoria>Deportes</categoria>
+		<genero>biografía</genero>
+	</libros>
+</biblioteca>
