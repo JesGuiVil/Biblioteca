@@ -18,6 +18,11 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
@@ -658,6 +663,30 @@ public class Metodos {
 		}
 
 		return result.toString();
+	}
+	public void generarHtml() {
+		try {
+            // Archivo XML de entrada
+            StreamSource xmlInput = new StreamSource(new File("Biblioteca.xml"));
+
+            // Archivo XSLT de transformación
+            StreamSource xslt = new StreamSource(new File("estructura.xsl"));
+
+            // Resultado de la transformación
+            StreamResult htmlOutput = new StreamResult(new File("tabla.html"));
+
+            // Configurar el proceso de transformación
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer(xslt);
+
+            // Aplicar la transformación y generar la tabla HTML
+            transformer.transform(xmlInput, htmlOutput);
+
+            System.out.println("Transformación exitosa. Se ha generado el archivo HTML.");
+
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
 	}
 
 }

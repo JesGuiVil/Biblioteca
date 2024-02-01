@@ -62,7 +62,8 @@ public class Interfaz {
 	private static Font font;
 	private static Font fontpequenia;
 	private static JButton pausarMusica=new JButton("pausar música");
-	private static JButton consultarXPathButton = new JButton("Consultar XPath");
+	private static JButton consultarXPathButton = new JButton("Realizar consulta XPath");
+	private static JButton generarHtmlButton = new JButton("Generar tabla HTML");
 	private static Metodos metodos = new Metodos();
     
 	public static void main(String[] args) {
@@ -141,6 +142,12 @@ public class Interfaz {
 	            metodos.realizarConsultaXPath(frame);
 	        }
 	    });
+		generarHtmlButton.addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            metodos.generarHtml();
+	        }
+	    });
 		
 		try {
 			imagenFondo = ImageIO.read(new File("imagenes/biblioteca.jpg"));
@@ -172,8 +179,9 @@ public class Interfaz {
 			e.printStackTrace();
 		}
 		frame.setLayout(new BorderLayout());
-		JPanel botonesPanel = new JPanel(new GridLayout(1, 2));
+		JPanel botonesPanel = new JPanel(new GridLayout(1, 3));
 	    botonesPanel.add(consultarXPathButton);
+	    botonesPanel.add(generarHtmlButton);
 	    botonesPanel.add(pausarMusica);
 	    frame.add(botonesPanel, BorderLayout.SOUTH);
 		frame.add(panelPrincipal);
