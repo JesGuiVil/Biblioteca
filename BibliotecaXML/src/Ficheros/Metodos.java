@@ -1,5 +1,6 @@
 package Ficheros;
 
+
 import java.awt.Component;
 import java.awt.Dimension;
 import java.io.File;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -244,181 +246,198 @@ public class Metodos {
 	}
 
 	public void modificarLibro(Biblioteca biblioteca) {
-		try {
-			// Preguntar si se quiere seleccionar por título o ISBN
-			String[] opcionesSeleccion = {"Título", "ISBN"};
-			JComboBox<String> seleccionBox = new JComboBox<>(opcionesSeleccion);
-			int seleccion = JOptionPane.showOptionDialog(
-					null,
-					"Seleccionar libro por:",
-					"Modificar Libro",
-					JOptionPane.DEFAULT_OPTION,
-					JOptionPane.QUESTION_MESSAGE,
-					null,
-					opcionesSeleccion,
-					opcionesSeleccion[0]);
+	    try {
+	        // Preguntar si se quiere seleccionar por título o ISBN
+	        String[] opcionesSeleccion = {"Título", "ISBN"};
+	        JComboBox<String> seleccionBox = new JComboBox<>(opcionesSeleccion);
+	        int seleccion = JOptionPane.showOptionDialog(
+	                null,
+	                "Seleccionar libro por:",
+	                "Modificar Libro",
+	                JOptionPane.DEFAULT_OPTION,
+	                JOptionPane.QUESTION_MESSAGE,
+	                null,
+	                opcionesSeleccion,
+	                opcionesSeleccion[0]);
 
-			// Obtener valor de búsqueda (título o ISBN)
-			String valorBusqueda = "";
-			if (seleccion == 0) {
-				valorBusqueda = JOptionPane.showInputDialog("Introduce el título del libro:");
-			} else if (seleccion == 1) {
-				String isbnStr = JOptionPane.showInputDialog("Introduce el ISBN del libro:");
-				if (isbnStr == null) return;
-				valorBusqueda = isbnStr;
-			} else {
-				return; // Usuario canceló
-			}
+	        // Obtener valor de búsqueda (título o ISBN)
+	        String valorBusqueda = "";
+	        if (seleccion == 0) {
+	            valorBusqueda = JOptionPane.showInputDialog("Introduce el título del libro:");
+	        } else if (seleccion == 1) {
+	            String isbnStr = JOptionPane.showInputDialog("Introduce el ISBN del libro:");
+	            if (isbnStr == null) return;
+	            valorBusqueda = isbnStr;
+	        } else {
+	            return; // Usuario canceló
+	        }
 
-			// Buscar el libro
-			Libro libroSeleccionado = null;
-			for (Libro libro : biblioteca.getLibros()) {
-				if ((seleccion == 0 && libro.getTitulo().equalsIgnoreCase(valorBusqueda)) ||
-						(seleccion == 1 && Long.toString(libro.getIsbn()).equals(valorBusqueda))) {
-					libroSeleccionado = libro;
-					break;
-				}
-			}
+	        // Buscar el libro
+	        Libro libroSeleccionado = null;
+	        for (Libro libro : biblioteca.getLibros()) {
+	            if ((seleccion == 0 && libro.getTitulo().equalsIgnoreCase(valorBusqueda)) ||
+	                    (seleccion == 1 && Long.toString(libro.getIsbn()).equals(valorBusqueda))) {
+	                libroSeleccionado = libro;
+	                break;
+	            }
+	        }
 
-			if (libroSeleccionado != null) {
-				// Mostrar lista de atributos para seleccionar
-				String[] opcionesAtributos = {"Título", "ISBN", "Autor", "Editorial", "Fecha", "Categoría", "Género 1", "Género 2"};
-				JComboBox<String> atributoBox = new JComboBox<>(opcionesAtributos);
-				int atributoSeleccionado = JOptionPane.showOptionDialog(
-						null,
-						"Seleccionar campo a modificar:",
-						"Modificar Libro",
-						JOptionPane.DEFAULT_OPTION,
-						JOptionPane.QUESTION_MESSAGE,
-						null,
-						opcionesAtributos,
-						opcionesAtributos[0]);
+	        if (libroSeleccionado != null) {
+	            // Mostrar lista de atributos para seleccionar
+	            String[] opcionesAtributos = {"Título", "ISBN", "Autor", "Editorial", "Fecha", "Categoría", "Género"};
+	            JComboBox<String> atributoBox = new JComboBox<>(opcionesAtributos);
+	            int atributoSeleccionado = JOptionPane.showOptionDialog(
+	                    null,
+	                    "Seleccionar campo a modificar:",
+	                    "Modificar Libro",
+	                    JOptionPane.DEFAULT_OPTION,
+	                    JOptionPane.QUESTION_MESSAGE,
+	                    null,
+	                    opcionesAtributos,
+	                    opcionesAtributos[0]);
 
-				// Obtener nuevo valor
-				String nuevoValor = JOptionPane.showInputDialog("Introduce el nuevo valor para " + opcionesAtributos[atributoSeleccionado] + ":");
+	            // Obtener nuevo valor
+	            String nuevoValor = JOptionPane.showInputDialog("Introduce el nuevo valor para " + opcionesAtributos[atributoSeleccionado] + ":");
 
-				// Actualizar el atributo seleccionado
-				switch (atributoSeleccionado) {
-				case 0:
-					libroSeleccionado.setTitulo(nuevoValor);
-					break;
-				case 1:
-					libroSeleccionado.setIsbn(Long.parseLong(nuevoValor));
-					break;
-				case 2:
-					libroSeleccionado.setAutor(nuevoValor);
-					break;
-				case 3:
-					libroSeleccionado.setEditorial(nuevoValor);
-					break;
-				case 4:
-					libroSeleccionado.setFecha(nuevoValor);
-					break;
-				case 5:
-					Categoria nuevaCategoria = (Categoria) JOptionPane.showInputDialog(
-							null,
-							"Seleccione la nueva categoría:",
-							"Modificar Libro",
-							JOptionPane.QUESTION_MESSAGE,
-							null,
-							Categoria.values(),
-							libroSeleccionado.getCategoria());
-					if (nuevaCategoria != null) {
-						libroSeleccionado.setCategoria(nuevaCategoria);
-					}
-					break;
-				case 6:
-					Genero nuevoGenero = (Genero) JOptionPane.showInputDialog(
-							null,
-							"Seleccione el nuevo género:",
-							"Modificar Libro",
-							JOptionPane.QUESTION_MESSAGE,
-							null,
-							Genero.values(),
-							libroSeleccionado.getGenero());
-					if (nuevoGenero != null) {
-						libroSeleccionado.setGenero(nuevoGenero);
-					}
-					break;
-				default:
-					JOptionPane.showMessageDialog(null, "Opción no válida");
-					break;
-				}
+	            // Verificar si el nuevo ISBN ya está en uso
+	            if (atributoSeleccionado == 1) {
+	                long nuevoIsbn = Long.parseLong(nuevoValor);
+	                for (Libro libro : biblioteca.getLibros()) {
+	                    if (libro != libroSeleccionado && libro.getIsbn() == nuevoIsbn) {
+	                        JOptionPane.showMessageDialog(null, "El ISBN introducido ya está en uso.");
+	                        return;
+	                    }
+	                }
+	            }
 
-				JOptionPane.showMessageDialog(null, "Libro modificado exitosamente");
+	            // Actualizar el atributo seleccionado
+	            switch (atributoSeleccionado) {
+	                case 0:
+	                    libroSeleccionado.setTitulo(nuevoValor);
+	                    break;
+	                case 1:
+	                    libroSeleccionado.setIsbn(Long.parseLong(nuevoValor));
+	                    break;
+	                case 2:
+	                    libroSeleccionado.setAutor(nuevoValor);
+	                    break;
+	                case 3:
+	                    libroSeleccionado.setEditorial(nuevoValor);
+	                    break;
+	                case 4:
+	                    libroSeleccionado.setFecha(nuevoValor);
+	                    break;
+	                case 5:
+	                    Categoria nuevaCategoria = (Categoria) JOptionPane.showInputDialog(
+	                            null,
+	                            "Seleccione la nueva categoría:",
+	                            "Modificar Libro",
+	                            JOptionPane.QUESTION_MESSAGE,
+	                            null,
+	                            Categoria.values(),
+	                            libroSeleccionado.getCategoria());
+	                    if (nuevaCategoria != null) {
+	                        libroSeleccionado.setCategoria(nuevaCategoria);
+	                    }
+	                    break;
+	                case 6:
+	                    Genero nuevoGenero = (Genero) JOptionPane.showInputDialog(
+	                            null,
+	                            "Seleccione el nuevo género:",
+	                            "Modificar Libro",
+	                            JOptionPane.QUESTION_MESSAGE,
+	                            null,
+	                            Genero.values(),
+	                            libroSeleccionado.getGenero());
+	                    if (nuevoGenero != null) {
+	                        libroSeleccionado.setGenero(nuevoGenero);
+	                    }
+	                    break;
+	                default:
+	                    JOptionPane.showMessageDialog(null, "Opción no válida");
+	                    break;
+	            }
 
-			} else {
-				JOptionPane.showMessageDialog(null, "No se encontró ningún libro con el título o ISBN proporcionado");
-			}
-			try {
-				JAXBContext context = JAXBContext.newInstance(Biblioteca.class);
-				Marshaller marshaller = context.createMarshaller();
+	            JOptionPane.showMessageDialog(null, "Libro modificado exitosamente");
 
-				marshaller.marshal(biblioteca, new File("Biblioteca.xml"));
+	        } else {
+	            JOptionPane.showMessageDialog(null, "No se encontró ningún libro con el título o ISBN proporcionado");
+	        }
+	        try {
+	            JAXBContext context = JAXBContext.newInstance(Biblioteca.class);
+	            Marshaller marshaller = context.createMarshaller();
 
-				System.out.println("Archivo actualizado");
-			} catch (JAXBException e) {
-				e.printStackTrace();
-			}
+	            marshaller.marshal(biblioteca, new File("Biblioteca.xml"));
 
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(null, "Error en la conversión de datos. Asegúrate de ingresar números válidos.");
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado. Verifica los datos ingresados.");
-		}
+	            System.out.println("Archivo actualizado");
+	        } catch (JAXBException e) {
+	            e.printStackTrace();
+	        }
+
+	    } catch (NumberFormatException e) {
+	        JOptionPane.showMessageDialog(null, "Error en la conversión de datos. Asegúrate de ingresar números válidos.");
+	    } catch (Exception e) {
+	        JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado. Verifica los datos ingresados.");
+	    }
 	}
 
-
 	public void agregarLibro(Biblioteca biblioteca) {
-		try {
-			String titulo = JOptionPane.showInputDialog("Introduce el título del libro:");
-			if (titulo == null) return;
+	    try {
+	        String titulo = JOptionPane.showInputDialog("Introduce el título del libro:");
+	        if (titulo == null) return;
 
-			String isbnStr = JOptionPane.showInputDialog("Introduce el ISBN del libro:");
-			if (isbnStr == null) return;
-			long isbn = Long.parseLong(isbnStr);
+	        // Verificar si el ISBN ya está en uso
+	        String isbnStr = JOptionPane.showInputDialog("Introduce el ISBN del libro:");
+	        if (isbnStr == null) return;
+	        long isbn = Long.parseLong(isbnStr);
+	        for (Libro libro : biblioteca.getLibros()) {
+	            if (libro.getIsbn() == isbn) {
+	                JOptionPane.showMessageDialog(null, "El ISBN introducido ya está en uso.");
+	                return;
+	            }
+	        }
 
-			String autor = JOptionPane.showInputDialog("Introduce el autor:");
-			if (autor == null) return;
+	        String autor = JOptionPane.showInputDialog("Introduce el autor:");
+	        if (autor == null) return;
 
-			String editorial = JOptionPane.showInputDialog("Introduce la editorial:");
-			if (editorial == null) return;
+	        String editorial = JOptionPane.showInputDialog("Introduce la editorial:");
+	        if (editorial == null) return;
 
-			String fecha = JOptionPane.showInputDialog("Introduce la fecha en formato dd-mm-aaaa:");
-			if (fecha == null) return;
+	        String fecha = JOptionPane.showInputDialog("Introduce la fecha en formato dd-mm-aaaa:");
+	        if (fecha == null) return;
 
 
-			Categoria categoria = (Categoria) JOptionPane.showInputDialog(null, "Introduce la categoría:", "Categoría",
-					JOptionPane.QUESTION_MESSAGE, null,
-					Categoria.values(), Categoria.values()[0]);
-			if (categoria == null) return;
+	        Categoria categoria = (Categoria) JOptionPane.showInputDialog(null, "Introduce la categoría:", "Categoría",
+	                JOptionPane.QUESTION_MESSAGE, null,
+	                Categoria.values(), Categoria.values()[0]);
+	        if (categoria == null) return;
 
-			Genero genero = (Genero) JOptionPane.showInputDialog(null, "Introduce el género:", "género",
-					JOptionPane.QUESTION_MESSAGE, null,
-					Genero.values(), Genero.values()[0]);
-			if (genero == null) return;
+	        Genero genero = (Genero) JOptionPane.showInputDialog(null, "Introduce el género:", "género",
+	                JOptionPane.QUESTION_MESSAGE, null,
+	                Genero.values(), Genero.values()[0]);
+	        if (genero == null) return;
 
-			Libro nuevoLibro = new Libro(titulo, isbn, autor, editorial, fecha, categoria, genero);
-			biblioteca.getLibros().add(nuevoLibro);
+	        Libro nuevoLibro = new Libro(titulo, isbn, autor, editorial, fecha, categoria, genero);
+	        biblioteca.getLibros().add(nuevoLibro);
 
-			JOptionPane.showMessageDialog(null, "Libro agregado a la biblioteca");
+	        JOptionPane.showMessageDialog(null, "Libro agregado a la biblioteca");
 
-			try {
-				JAXBContext context = JAXBContext.newInstance(Biblioteca.class);
-				Marshaller marshaller = context.createMarshaller();
+	        try {
+	            JAXBContext context = JAXBContext.newInstance(Biblioteca.class);
+	            Marshaller marshaller = context.createMarshaller();
 
-				marshaller.marshal(biblioteca, new File("Biblioteca.xml"));
+	            marshaller.marshal(biblioteca, new File("Biblioteca.xml"));
 
-				System.out.println("Archivo actualizado");
-			} catch (JAXBException e) {
-				e.printStackTrace();
-			}
+	            System.out.println("Archivo actualizado");
+	        } catch (JAXBException e) {
+	            e.printStackTrace();
+	        }
 
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(null, "Error en la conversión de datos. Asegúrate de ingresar números válidos.");
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado. Verifica los datos ingresados.");
-		}
+	    } catch (NumberFormatException e) {
+	        JOptionPane.showMessageDialog(null, "Error en la conversión de datos. Asegúrate de ingresar números válidos.");
+	    } catch (Exception e) {
+	        JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado. Verifica los datos ingresados.");
+	    }
 	}
 
 
@@ -687,6 +706,24 @@ public class Metodos {
         } catch (TransformerException e) {
             e.printStackTrace();
         }
+	}
+	public void mostrarTextoAyuda(JFrame frame) {
+		String MANUAL_TEXT = "<html>" +
+		        "<div style='font-weight: normal;'>" +
+		        "<b>Funcionalidades:</b><br><br>" +
+		        "&nbsp;&nbsp;1. <b>Mostrar libros:</b><br>" +
+		        "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; Muestra las distintas categorías en las que están clasificados los libros. Al seleccionar una categoría aparecerá un desplegable con los libros. Al seleccionar algún libro del desplegable, se mostrarán sus datos.<br>" +
+		        "&nbsp;&nbsp;2. <b>Gestionar biblioteca:</b><br>" +
+		        "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; Permite realizar distintas gestiones, como añadir un nuevo libro, modificar algún libro existente o eliminarlo de la biblioteca.<br>" +
+		        "&nbsp;&nbsp;3. <b>Mostrar XML:</b><br>" +
+		        "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; Muestra el contenido total del XML en formato original. <br>" +
+		        "&nbsp;&nbsp;4. <b>Realizar consulta XPath:</b><br>" +
+		        "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; Herramienta que permite realizar consultas sobre el XML. Ejemplo: para mostrar todos los titulos, introduce '/biblioteca/libros/titulo'. Acepta todo tipo de consultas, ya sea lista de nodos, nodos o dato específico.<br>" +
+		        "&nbsp;&nbsp;5. <b>Generar tabla HTML:</b><br>" +
+		        "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; Permite genenerar una tabla HTML con los datos de los libros aplicando una estructura XSL al archivo XML (actualiza el proyecto tras pulsar el botón y aparecerá el archivo 'tabla.html')<br>" +
+		        "&nbsp;&nbsp;6. <b>Pausar/Reanudar música:</b><br>" +
+		        "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; Activa o desactiva la música de fondo.</div></html>";
+	    JOptionPane.showMessageDialog(frame, MANUAL_TEXT, "Manual de Usuario", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 }

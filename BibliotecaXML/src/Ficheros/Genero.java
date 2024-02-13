@@ -1,6 +1,8 @@
+// Enumeramos los distintos géneros de libros
 package Ficheros;
 
-// Enumeramos los distintos géneros de libros
+
+
 public enum Genero {
     drama,
     comedia,

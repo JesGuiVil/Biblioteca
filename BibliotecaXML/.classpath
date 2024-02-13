@@ -32,5 +32,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="D:/DAM/SEGUNDO/Biblioteca/BibliotecaXML/mdt-uml2-Update-5.5.3.zip"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -1,5 +1,6 @@
 package Ficheros;
 
+
 import java.awt.Dimension;
 
 import javax.swing.JTextArea;

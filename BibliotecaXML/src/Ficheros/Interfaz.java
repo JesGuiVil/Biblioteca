@@ -1,5 +1,6 @@
 package Ficheros;
 
+
 import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -64,6 +65,7 @@ public class Interfaz {
 	private static JButton pausarMusica=new JButton("pausar música");
 	private static JButton consultarXPathButton = new JButton("Realizar consulta XPath");
 	private static JButton generarHtmlButton = new JButton("Generar tabla HTML");
+	private static JButton ayuda = new JButton("Ayuda");
 	private static Metodos metodos = new Metodos();
     
 	public static void main(String[] args) {
@@ -103,7 +105,6 @@ public class Interfaz {
 		panelLibros = new JPanel(new GridBagLayout());
 		panelGestion = new JPanel(new GridBagLayout());
 		panelActual = new JPanel();
-		reproducirMusica();
 		try {
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			customFont = Font.createFont(Font.TRUETYPE_FONT, new File("JosefinSans-Medium.ttf"));
@@ -148,6 +149,12 @@ public class Interfaz {
 	            metodos.generarHtml();
 	        }
 	    });
+		ayuda.addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            metodos.mostrarTextoAyuda(frame);
+	        }
+	    });
 		
 		try {
 			imagenFondo = ImageIO.read(new File("imagenes/biblioteca.jpg"));
@@ -179,10 +186,11 @@ public class Interfaz {
 			e.printStackTrace();
 		}
 		frame.setLayout(new BorderLayout());
-		JPanel botonesPanel = new JPanel(new GridLayout(1, 3));
+		JPanel botonesPanel = new JPanel(new GridLayout(1, 4));
 	    botonesPanel.add(consultarXPathButton);
 	    botonesPanel.add(generarHtmlButton);
 	    botonesPanel.add(pausarMusica);
+	    botonesPanel.add(ayuda);
 	    frame.add(botonesPanel, BorderLayout.SOUTH);
 		frame.add(panelPrincipal);
 	}

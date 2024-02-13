@@ -1,5 +1,6 @@
 package Ficheros;
 
+
 import java.math.BigInteger;
 import java.time.LocalDate;
 
@@ -23,7 +24,7 @@ public class Libro {
    }
 
 
-    public Libro(String titulo, long isbn, String autor, String editorial, String fecha, Ficheros.Categoria categoria,
+    public Libro(String titulo, long isbn, String autor, String editorial, String fecha, Categoria categoria,
 			Genero genero) {
 		super();
 		this.Titulo = titulo;
